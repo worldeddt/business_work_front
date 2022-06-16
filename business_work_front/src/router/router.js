@@ -8,15 +8,15 @@ const login = r => require.ensure([], () => r(require('@/view/login/Login')), 'l
 
 
 const routes = [
-	{
-		path: '/',
-		component: login
-	},
-	{
-        path: '/main',
-        component : main 
-    }
-    ]
+  {
+    path: '/',
+    component: login
+  },
+  {
+      path: '/main',
+      component : main
+  }
+];
 
 
 export default new Router({

@@ -1,15 +1,10 @@
 <template>
-  <div id="app">
-    <router-link to="/">login</router-link>
-    <br>
-    <router-link to="/main">main</router-link>
-    <router-view></router-view>
-  </div>
+<div id="app">
+<router-view></router-view>
+</div>
 </template>
 
 <script>
-
-
 export default {
   name:'App',
 }

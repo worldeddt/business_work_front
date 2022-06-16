@@ -1,12 +1,21 @@
 <template>
-  <div>
+<div>
+
+  <div @click="submitForm()">
       login page
   </div>
+
+</div>  
 </template>
 
 <script>
 export default {
-    name:'Login'
+    name:'Login',
+    methods : {
+        async submitForm() {
+            this.$router.push('main')
+        }
+    }
 }
 </script>
 
