@@ -1,23 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Home from '../view/Home.vue'
 
-Vue.use(Router)
-
-const main = r => require.ensure([], () => r(require('@/view/main/Main')), 'main');
-const login = r => require.ensure([], () => r(require('@/view/login/Login')), 'login');
-
+Vue.use(Router);
 
 const routes = [
   {
     path: '/',
-    component: login
-  },
-  {
-      path: '/main',
-      component : main
+    name: 'home',
+    component: Home
   }
 ];
-
 
 export default new Router({
     routes,
