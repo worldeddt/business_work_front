@@ -8,18 +8,10 @@
       <v-list dense>
         <v-list-item>
           <v-list-item-action>
-            <i class="fas fa-home"></i>
+            <i class="fa-solid fa-list-check"></i>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-action>
-            <i class="fas fa-home"></i>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title style="cursor: pointer" @click="$router.push({path:'/project'})">Project_1</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -28,7 +20,7 @@
         color="grey lighten-4"
         flat
         tile>
-    <v-toolbar color="indigo" dark fixed>
+    <v-toolbar dark fixed>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Our Tasks</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -37,7 +29,7 @@
     <v-main>
       <router-view></router-view>
     </v-main>
-    <v-footer color="indigo" app>
+    <v-footer dark app>
       <span class="white--text">&copy; 2022</span>
     </v-footer>
   </v-app>
