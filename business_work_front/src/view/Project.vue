@@ -1,93 +1,38 @@
 <template>
 
-<div>
-    <v-row
-      justify="center"
-      align="center"
-    >
-    </v-row>
-    <v-container
-      id="scroll-target"
-      style="width: 1000px; border:1px solid black;"
-      class="overflow-x-auto"
-    >
-      <v-row
-        v-scroll:#scroll-target="onScroll"
-        align="center"
-        justify="center"
-        style="height: 1000px;"
-      >
-        <v-col v-for="section in sections" :key="section.index">
-          <v-card class="overflow-x-auto" width="350" height="1100" :col="12">
-            {{section.title}}
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+<div class="row m-1">
+<!-- sections -->
+  <div v-for="section in sections" :key="section.index" class="m-2 col-md-3">
+  <v-card class="overflow-auto" style="height:1000px;">
 
-<!-- 
-<div 
-id="scroll-target"
-      style="max-height: 1200px"
-      class="overflow-y-auto"
->
-  <div class="mt-4 mx-2">
-    <v-row
-    v-scroll:#scroll-target="onScroll"
-    >
-      <v-col v-for="section in sections" :key="section.index">
-        <v-card class="overflow-x-auto" width="350" height="1200" :col="12">
-        {{section.title}}
-        </v-card>
-      </v-col>
-    </v-row>  
-  </div>
-</div> -->
+  <v-card-title v-text="section.title"></v-card-title>
 
+<v-col v-for="task in tasks" :key="task.title">
+    <!-- tasks -->
+    <v-card>
+      <v-checkbox v-model="todoCheck"></v-checkbox>
+      <v-card-title v-text="task.title"></v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
 
+          <v-btn icon>
+            <v-icon>mdi-heart</v-icon>
+          </v-btn>
 
-  <!-- <v-card
-    class="overflow-x-auto"
-    max-width="window.innerWidth"
-    max-height="window.innerHeight"
-  >
-    <v-row>
-<v-col v-for="section in sections" :key="section.index">
-  <v-card 
-    max-width="350" 
-    max-height="500"
-    class="overflow-x-auto"
-  >
-    <v-col :cols="12"> 
-          <v-col v-for="card in tasks" :key="card.title" >
-            <v-card>
-              <v-checkbox v-model="todoCheck"></v-checkbox>
-              <v-card-title v-text="card.title"></v-card-title>
-            
-              <v-card-actions>
-                <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon>mdi-bookmark</v-icon>
+          </v-btn>
 
-                <v-btn icon>
-                  <v-icon>mdi-heart</v-icon>
-                </v-btn>
-
-                <v-btn icon>
-                  <v-icon>mdi-bookmark</v-icon>
-                </v-btn>
-
-                <v-btn icon>
-                  <v-icon>mdi-share-variant</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-    </v-col>
+          <v-btn icon>
+            <v-icon>mdi-share-variant</v-icon>
+          </v-btn>
+        </v-card-actions>
     </v-card>
-</v-col></v-row>
+  </v-col>
+  </v-card>
 
-</v-card> -->
-
+  </div>
+</div>
 </template>
 
 <script>
@@ -97,9 +42,17 @@ export default {
   data: () => ({
     todoCheck : false,
     tasks: [
-      { title: 'back office', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 6 },
-      { title: 'erp product', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 },
-      { title: 'main application', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 },
+      { title: 'back office', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 3 },
+      { title: 'erp product', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 3 },
+      { title: 'main application', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
+      { title: 'main application1', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
+      { title: 'main application2', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
+      { title: 'main application3', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
+      { title: 'main application4', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
+      { title: 'main application5', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
+      { title: 'main application6', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
+      { title: 'main application7', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
+      { title: 'main application8', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
     ],
     sections: [
       {index:'1', title: 'todo'},
@@ -107,6 +60,9 @@ export default {
       {index:'3', title: 'PR'}
     ]
   }),
+  created() {
+    console.log('dddd')
+  }
 }
 
 </script>
