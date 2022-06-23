@@ -2,11 +2,12 @@
 
 <div class="row m-1">
 <!-- sections -->
-  <div v-for="section in sections" :key="section.index" class="m-2 col-md-3">
-  <v-card class="overflow-auto" style="height:1000px;">
+  <div v-for="section in sections" :key="section.index" class="m-2 col-md-3" style="min-height:100%;position:relative;">
+  <v-card class="pb-15">
 
   <v-card-title v-text="section.title"></v-card-title>
-
+<div class="overflow-y-auto" style="height:1000px;">
+  <div>
 <v-col v-for="task in tasks" :key="task.title">
     <!-- tasks -->
     <v-card>
@@ -29,6 +30,8 @@
         </v-card-actions>
     </v-card>
   </v-col>
+  </div>
+  </div>
   </v-card>
 
   </div>
