@@ -1,8 +1,9 @@
 <template>
-
-<div class="row m-1">
+<div class="overflow-x-auto">
+<div class="m-1 mainSection">
 <!-- sections -->
-  <div v-for="section in sections" :key="section.index" class="m-2 col-md-3" style="min-height:100%;position:relative;">
+  <div v-for="section in sections" :key="section.index" class="m-2 section" 
+  style="min-height:100%;position:relative;">
   <v-card class="pb-15">
 
   <v-card-title v-text="section.title"></v-card-title>
@@ -36,10 +37,10 @@
 
   </div>
 </div>
+</div>
 </template>
 
 <script>
-
 export default {
   name : 'project',
   data: () => ({
@@ -60,7 +61,9 @@ export default {
     sections: [
       {index:'1', title: 'todo'},
       {index:'2', title: 'in sprint'},
-      {index:'3', title: 'PR'}
+      {index:'3', title: 'PR'},
+      {index:'4', title: 'PR'},
+      {index:'5', title: 'PR'}
     ]
   }),
   created() {
@@ -69,7 +72,3 @@ export default {
 }
 
 </script>
-
-<style>
-
-</style>
