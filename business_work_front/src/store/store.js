@@ -6,15 +6,22 @@ Vue.use(Vuex);
 
 const storage = {
     async fetch() {
-        await axios.post('http:://localhost:8090/project/all')
+        await axios.post('http://localhost:8090/project/all')
               .then(function (response) {
                 console.log("==============================;;;");
-                console.log(response);
-                console.log("==============================;;;");
-                return response;
+                if (response.data) {
+                  const returnValue = response.data;
+
+                  if (returnValue.result === 1)
+                    return returnValue.projectList;
+
+                  console.log(returnValue);
+
+                }
               })
               .catch(function (error) {
-                console.log(error);
+                console.error(error);
+              
               });
         
 		// if (localStorage.length > 0) {
