@@ -67,8 +67,7 @@ export default {
     ]
   }),
   created() {
-    this.$store.
-    console.log('dddd')
+    console.log('dddd');
   }
 }
 

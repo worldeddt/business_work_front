@@ -12,10 +12,10 @@ const storage = {
                 if (response.data) {
                   const returnValue = response.data;
 
+                  console.log(returnValue);
+                  
                   if (returnValue.result === 1)
                     return returnValue.projectList;
-
-                  console.log(returnValue);
 
                 }
               })
