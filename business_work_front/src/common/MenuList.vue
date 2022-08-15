@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="$store.state.drawer" fixed app>
+  <v-navigation-drawer v-model="drawer" fixed app>
       <v-list dense>
         <v-list-item>
           <v-list-item-action>

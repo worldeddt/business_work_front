@@ -5,7 +5,21 @@ import axios from 'axios';
 Vue.use(Vuex);
 Vue.prototype.axios = axios;
 
-const storage = {
+const store = new Vuex.Store({
+  state: {
+    allProjects:[]
+  },
+  getters : {
+    getProjectList(state) {
+      return state.allProjects;
+    }
+  },
+  mutations: {
+
+  }
+});
+
+export const storage = {
   async fetch() {
     console.group("fetch log");
     // let param = new URLSearchParams();
@@ -15,11 +29,11 @@ const storage = {
     .then((response) => {
       if (response.data) {
         const returnValue = response.data;
-
-        console.log(returnValue);
         
-        if (returnValue.commonResponse && returnValue.commonResponse.result === 1) 
-          return returnValue.projectList;
+      if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
+        console.log(returnValue.projectList);
+        store.state.allProjects = returnValue.projectList
+      }
       } 
     })
     .catch(function (error) {
@@ -29,21 +43,4 @@ const storage = {
 	}
  }
 
-
-export const store = new Vuex.Store({
-    state: {
-      allProjects: storage.fetch() || [],
-      drawer : false
-    },
-    getters : {
-      getProjectList(state) {
-        return state.allProjects;
-      }
-    },
-    mutations: {
-
-    },
-    methods : {
-
-    }
-});
+ storage.fetch();
