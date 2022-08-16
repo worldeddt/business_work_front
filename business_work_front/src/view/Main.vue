@@ -5,8 +5,7 @@
         fixed
         app
     >
-      <button v-on:click="showStore">showStore</button>
-      <v-list v-for="project in this.storeData" :key="project.index" dense>
+      <v-list v-for="project in this.$store.getters.getProjectList" :key="project.index" dense>
         <v-list-item>
           <v-list-item-action>
             <i class="fa-solid fa-list-check"></i>
@@ -47,22 +46,11 @@ export default {
     source: String
   },
   methods : {
-    async showData() {
-      setTimeout(() => {this.storeData = this.$store.dispatch("delayAllProjectFetch")},2000);
-    },
-    showStore() {
-      console.log(this.storeData);
-    }
   },
-  watch : {
-     drawer : async function (newValue, oldValue) {
-      if (newValue != oldValue && newValue) {
-        this.storeData = this.showData();
-      }
-    }
+  watch : { 
   },
   created() {
-    
+    this.$store.dispatch("delayAllProjectFetch");
   }
 }
 

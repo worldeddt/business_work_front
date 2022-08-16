@@ -36,7 +36,7 @@ export const storage = {
 
 const store = new Vuex.Store({
   state: {
-    allProjects: storage.fetch() || []
+    allProjects: {}
   },
   getters : {
     getProjectList(state) {
@@ -47,12 +47,23 @@ const store = new Vuex.Store({
     allProjectFetch() {
       console.log('commit');
       return storage.fetch();
+    }, 
+    fetchProject(state, fetchData) { 
+      if (fetchData.data) {
+        const returnValue = fetchData.data;  
+        if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
+          state.allProjects = returnValue.projectList;
+        }
+      }
     }
   },
   actions : {
-      delayAllProjectFetch(context) {
-      console.log('disfatch');
-      return context.commit('allProjectFetch');
+      async delayAllProjectFetch(context) {
+        return await axios.post('http://localhost:8090/project/allTemplate')
+        .then(response => {
+          console.log(response);
+          context.commit("fetchProject", response);
+        });
     }
   }
 });
