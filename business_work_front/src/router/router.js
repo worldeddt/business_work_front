@@ -13,7 +13,7 @@ const routes = [
     component: MainView
   },{
     name: 'project',
-    path: '/project',
+    path: '/project/:projectId',
     component: project
   }
 ];

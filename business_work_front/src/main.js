@@ -12,42 +12,20 @@ Vue.prototype.axios = axios;
 Vue.use(Vuex);
 Vue.config.productionTip = false
 
-export const storage = {
-  async fetch() {
-    // let param = new URLSearchParams();
-    // param.append('projectId', '2');
-
-    await axios.post('http://localhost:8090/project/allTemplate')
-    .then((response) => {
-      if (response.data) {
-        const returnValue = response.data;
-        
-      if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
-        returnValue.projectList;
-        return returnValue.projectList;
-      }
-      } 
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-  }
- }
-
 const store = new Vuex.Store({
   state: {
-    allProjects: {}
+    allProjects : {},
+    allData : {}
   },
   getters : {
     getProjectList(state) {
       return state.allProjects;
+    },
+    getAllData(state) {
+      return state.allData;
     }
   },
   mutations: {
-    allProjectFetch() {
-      console.log('commit');
-      return storage.fetch();
-    }, 
     fetchProject(state, fetchData) { 
       if (fetchData.data) {
         const returnValue = fetchData.data;  
@@ -55,15 +33,34 @@ const store = new Vuex.Store({
           state.allProjects = returnValue.projectList;
         }
       }
+    },
+    fetchAllData(state, fetchData) {
+      if (fetchData.data) {
+        const returnValue = fetchData.data;  
+        if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
+          state.allData = returnValue;
+          console.log(state.allData);
+        }
+      }
     }
   },
   actions : {
-      async delayAllProjectFetch(context) {
-        return await axios.post('http://localhost:8090/project/allTemplate')
+    async delayAllProjectFetch(context) {
+      await axios.post('http://localhost:8090/project/allTemplate')
+      .then(response => {
+        console.log(response);
+        context.commit("fetchProject", response);
+      });
+    },
+    async delayAllDataFetch(context, parameter) {
+      if (parameter && parameter.projectId){
+        let param = new URLSearchParams();
+        param.append('projectId', parameter.projectId);
+        await axios.post('http://localhost:8090/project/template', param)
         .then(response => {
-          console.log(response);
-          context.commit("fetchProject", response);
+          context.commit("fetchAllData", response);
         });
+      }
     }
   }
 });

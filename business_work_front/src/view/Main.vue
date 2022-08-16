@@ -11,7 +11,7 @@
             <i class="fa-solid fa-list-check"></i>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title style="cursor: pointer" @click="$router.push({path:'/project'})">{{project.title}}</v-list-item-title>
+            <v-list-item-title style="cursor: pointer" @click="$router.push({path:`/project/${project.index}`})">{{project.title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
