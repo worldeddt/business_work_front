@@ -11,7 +11,7 @@
             <i class="fa-solid fa-list-check"></i>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title style="cursor: pointer" @click="$router.push({path:`/project/${project.index}`})">{{project.title}}</v-list-item-title>
+            <v-list-item-title style="cursor: pointer" @click="routerProject(`${project.index}`)">{{project.title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -27,7 +27,7 @@
     </v-toolbar>
     </v-card>
     <v-main>
-      <router-view></router-view>
+      <router-view :key="$route.fullPath"></router-view>
     </v-main>
     <v-footer dark app>
       <span class="white--text">&copy; 2022</span>
@@ -46,6 +46,13 @@ export default {
     source: String
   },
   methods : {
+    routerProject(projectIndex) {
+      console.log(projectIndex);
+      if(this.$route.path !== `/project/${projectIndex}`) {
+        this.$router.push({path:`/project/${projectIndex}`})
+        // this.$router.go()
+      }
+    }
   },
   watch : { 
   },

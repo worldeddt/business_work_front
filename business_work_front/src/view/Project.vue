@@ -70,10 +70,8 @@ export default {
     const store = this.$store;
     const route = this.$route;
     const promise = new Promise(function (resolve) {
-
     store.dispatch("delayAllDataFetch", route.params);
-    resolve("success");
-    
+      resolve("success");
     });
 
     promise.then(function(_result) {

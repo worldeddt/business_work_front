@@ -48,7 +48,6 @@ const store = new Vuex.Store({
     async delayAllProjectFetch(context) {
       await axios.post('http://localhost:8090/project/allTemplate')
       .then(response => {
-        console.log(response);
         context.commit("fetchProject", response);
       });
     },
