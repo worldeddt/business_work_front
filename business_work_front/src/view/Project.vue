@@ -76,6 +76,7 @@ export default {
 
     promise.then(function(_result) {
       console.log(_result);
+      console.log(this.$store.state.allData.sectionList);
     });
   }
 }

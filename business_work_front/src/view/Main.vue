@@ -50,7 +50,6 @@ export default {
       console.log(projectIndex);
       if(this.$route.path !== `/project/${projectIndex}`) {
         this.$router.push({path:`/project/${projectIndex}`})
-        // this.$router.go()
       }
     }
   },
