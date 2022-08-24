@@ -11,7 +11,7 @@
   <div>
 <v-col v-for="task in section.taskList" :key="task.title">
     <!-- tasks -->
-    <v-card draggable="true" @dragstart="drag($event)" >
+    <v-card :id="task.index" draggable="true" @dragstart="drag($event)" >
       <v-checkbox v-model="todoCheck"></v-checkbox>
       <v-card-title v-text="task.title"></v-card-title>
         <v-card-actions>
@@ -49,14 +49,21 @@ export default {
     sections: []
   }),
   methods : {
-    drag(e) {
+    drag(ev) {
+      console.log(ev.target.id);
       ev.dataTransfer.setData("text", ev.target.id);
+
+      console.log(ev.dataTransfer.getData("text"));
     },
     drop(ev) {
-      console.log(ev);
       ev.preventDefault();
+      console.log(ev.dataTransfer);
       var data = ev.dataTransfer.getData("text");
+
+      console.log(data);
+      if (ev.target) {
       ev.target.appendChild(document.getElementById(data));
+      }
     },
     allowDrop(ev) {
       ev.preventDefault();
