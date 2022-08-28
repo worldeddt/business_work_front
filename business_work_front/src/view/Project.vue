@@ -50,23 +50,21 @@ export default {
   }),
   methods : {
     drag(ev) {
-      console.log(ev.target.id);
       ev.dataTransfer.setData("text", ev.target.id);
-
-      console.log(ev.dataTransfer.getData("text"));
     },
     drop(ev) {
       ev.preventDefault();
-      console.log(ev.dataTransfer);
-      var data = ev.dataTransfer.getData("text");
+      let data = ev.dataTransfer.getData("text");
 
-      console.log(data);
-      if (ev.target) {
-      ev.target.appendChild(document.getElementById(data));
-      }
+      if (ev.target) ev.target.appendChild(document.getElementById(data));
     },
     allowDrop(ev) {
       ev.preventDefault();
+    },
+    moveToTask() {
+      const store = this.$store;
+      store.dispatch("delayAllDataFetch", route.params);
+      resolve("success");
     }
   },
   created() {
