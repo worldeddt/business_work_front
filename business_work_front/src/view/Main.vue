@@ -47,7 +47,6 @@ export default {
   },
   methods : {
     routerProject(projectIndex) {
-      console.log(projectIndex);
       if(this.$route.path !== `/project/${projectIndex}`) {
         this.$router.push({path:`/project/${projectIndex}`})
       }

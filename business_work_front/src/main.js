@@ -61,23 +61,26 @@ const store = new Vuex.Store({
         });
       }
     }, 
-    async moveToTask(taskId) {
-      if (!taskId) {
+    async moveToTask(parameter) {
+      console.log(this.$state.allData);
+
+      if (!parameter.index) {
         alert('테스크 정보를 찾을 수 없습니다.');
         return;
       }
 
+      if (!parameter) return;
 
       let param = new URLSearchParams();
       param.append('index', parameter.projectId);
-      param.append('title', parameter.projectId);
+      param.append('title', parameter.ti);
       param.append('description', parameter.projectId);
       param.append('sectionId', parameter.projectId);
       param.append('status', 'TODO');
 
       await axios.post('http://localhost:8090/task/update', param)
       .then(response =>  {
-        
+        console.log(response)
       })
     }
   }

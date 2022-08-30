@@ -56,20 +56,35 @@ export default {
       ev.preventDefault();
       let data = ev.dataTransfer.getData("text");
 
-      if (ev.target) ev.target.appendChild(document.getElementById(data));
+      if (ev.target) {
+        ev.target.appendChild(document.getElementById(data));
+        this.moveToTask(data.id, ev.target.id)  
+      }
     },
     allowDrop(ev) {
       ev.preventDefault();
     },
-    moveToTask() {
+    moveToTask(taskId, sectionId) {
       const store = this.$store;
-      store.dispatch("delayAllDataFetch", route.params);
-      resolve("success");
-    }
+
+      let param = {
+        "index" : taskId,
+        "sectionId" : sectionId
+      }
+      
+      const promise = new Promise(function (resolve) {
+      store.dispatch("moveToTask", param);
+        resolve("success");
+      });
+
+      promise.then(function(_result) {
+      console.log(_result);
+    });
   },
   created() {
     const store = this.$store;
     const route = this.$route;
+    console.log(route.params);
     const promise = new Promise(function (resolve) {
     store.dispatch("delayAllDataFetch", route.params);
       resolve("success");
@@ -78,6 +93,7 @@ export default {
     promise.then(function(_result) {
       console.log(_result);
     });
+    }
   }
 }
 
