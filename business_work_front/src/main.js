@@ -39,7 +39,6 @@ const store = new Vuex.Store({
         const returnValue = fetchData.data;  
         if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
           state.allData = returnValue;
-          console.log(state.allData);
         }
       }
     }
@@ -62,7 +61,8 @@ const store = new Vuex.Store({
       }
     }, 
     async moveToTask(parameter) {
-      console.log(this.$state.allData);
+      console.log(parameter)
+      console.log(this.state.allData);
 
       if (!parameter.index) {
         alert('테스크 정보를 찾을 수 없습니다.');
