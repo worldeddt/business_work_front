@@ -62,7 +62,7 @@ const store = new Vuex.Store({
     }, 
     async moveToTask(parameter) {
       console.log(parameter)
-      console.log(this.state.allData);
+      console.log();
 
       if (!parameter.index) {
         alert('테스크 정보를 찾을 수 없습니다.');
@@ -72,11 +72,23 @@ const store = new Vuex.Store({
       if (!parameter) return;
 
       let param = new URLSearchParams();
-      param.append('index', parameter.projectId);
-      param.append('title', parameter.ti);
-      param.append('description', parameter.projectId);
-      param.append('sectionId', parameter.projectId);
-      param.append('status', 'TODO');
+
+      for (let section of this.state.allData.sectionList) {
+        if (section.index === parameter.sectionId) {
+          for (let task of this.state.allData.sectionList.taskList) {
+            if (task.index === parameter.index) {
+              param.append('index', task.index);
+              param.append('title', task.title);
+              param.append('description', task.description);
+              param.append('sectionId', section.index);
+              param.append('status', task.status);
+            }
+          }
+        }
+      }
+
+      
+      
 
       await axios.post('http://localhost:8090/task/update', param)
       .then(response =>  {
