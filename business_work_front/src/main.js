@@ -31,14 +31,17 @@ const store = new Vuex.Store({
         const returnValue = fetchData.data;  
         if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
           state.allProjects = returnValue.projectList;
+          console.log(state.allProjects);
         }
       }
     },
     fetchAllData(state, fetchData) {
       if (fetchData.data) {
         const returnValue = fetchData.data;  
+        console.log(returnValue);
         if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
           state.allData = returnValue;
+          console.log(state.allData);
         }
       }
     }
@@ -51,6 +54,7 @@ const store = new Vuex.Store({
       });
     },
     async delayAllDataFetch(context, parameter) {
+      
       if (parameter && parameter.projectId){
         let param = new URLSearchParams();
         param.append('projectId', parameter.projectId);
@@ -86,8 +90,6 @@ const store = new Vuex.Store({
           }
         }
       }
-
-      
       
 
       await axios.post('http://localhost:8090/task/update', param)
