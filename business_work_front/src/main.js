@@ -54,7 +54,7 @@ const store = new Vuex.Store({
       });
     },
     async delayAllDataFetch(context, parameter) {
-      
+      console.log(parameter);
       if (parameter && parameter.projectId){
         let param = new URLSearchParams();
         param.append('projectId', parameter.projectId);
