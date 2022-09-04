@@ -31,17 +31,14 @@ const store = new Vuex.Store({
         const returnValue = fetchData.data;  
         if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
           state.allProjects = returnValue.projectList;
-          console.log(state.allProjects);
         }
       }
     },
     fetchAllData(state, fetchData) {
       if (fetchData.data) {
         const returnValue = fetchData.data;  
-        console.log(returnValue);
         if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
           state.allData = returnValue;
-          console.log(state.allData);
         }
       }
     }
@@ -54,7 +51,6 @@ const store = new Vuex.Store({
       });
     },
     async delayAllDataFetch(context, parameter) {
-      console.log(parameter);
       if (parameter && parameter.projectId){
         let param = new URLSearchParams();
         param.append('projectId', parameter.projectId);
@@ -64,37 +60,20 @@ const store = new Vuex.Store({
         });
       }
     }, 
-    async moveToTask(parameter) {
-      console.log(parameter)
-      console.log();
-
-      if (!parameter.index) {
-        alert('테스크 정보를 찾을 수 없습니다.');
-        return;
-      }
-
-      if (!parameter) return;
-
-      let param = new URLSearchParams();
-
-      for (let section of this.state.allData.sectionList) {
-        if (section.index === parameter.sectionId) {
-          for (let task of this.state.allData.sectionList.taskList) {
-            if (task.index === parameter.index) {
-              param.append('index', task.index);
-              param.append('title', task.title);
-              param.append('description', task.description);
-              param.append('sectionId', section.index);
-              param.append('status', task.status);
-            }
-          }
-        }
-      }
-      
-
-      await axios.post('http://localhost:8090/task/update', param)
+    async moveToTask(context, parameter) {
+      await axios.post('http://localhost:8090/task/update', parameter)
       .then(response =>  {
-        console.log(response)
+        if (response && response.data && response.data.result) {
+
+          if (Number(response.data.result) !== 1) {
+            alert(`수정에 실패하였습니다. 결과 : ${response.data.message}`);
+            return;
+          }
+          
+        } else {
+          alert("수정에 실패하였습니다.");
+          return;
+        }
       })
     }
   }

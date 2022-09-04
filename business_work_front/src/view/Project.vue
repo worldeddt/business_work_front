@@ -4,7 +4,7 @@
 <!-- sections -->
 <div v-for="section in this.$store.state.allData.sectionList" :key="section.index" class="m-2 section" 
   style="min-height:100%;position:relative;">
-  <v-card class="pb-15" @drop="drop($event)" @dragover="allowDrop($event)">
+  <v-card class="pb-15" @drop="drop($event, section.index)" @dragover="allowDrop($event)">
   <v-card-title v-text="section.title"></v-card-title>
   <div class="overflow-y-auto" style="height:1000px;">
     <v-col v-for="task in section.taskList" :key="task.title">
@@ -47,13 +47,21 @@ export default {
     drag(ev) {
       ev.dataTransfer.setData("text", ev.target.id);
     },
-    drop(ev) {
+    drop(ev, sectionId) {
       ev.preventDefault();
-      let data = ev.dataTransfer.getData("text");
+      let taskId = ev.dataTransfer.getData("text");
 
-      if (ev.target) {
-        ev.target.appendChild(document.getElementById(data));
-        this.moveToTask(data.id, ev.target.id)  
+      console.log({
+        'taskId' : Number(taskId),
+        sectionId
+      })
+
+      if (!taskId || !sectionId) {
+        alert('테스크 정보를 찾을 수 없습니다.');
+        return;
+      } else {
+        this.moveToTask(taskId, sectionId)  
+        ev.target.appendChild(document.getElementById(taskId));
       }
     },
     allowDrop(ev) {
@@ -61,26 +69,31 @@ export default {
     },
     moveToTask(taskId, sectionId) {
       const store = this.$store;
+      const sectionList = store.getters.getAllData.sectionList;
 
-      let param = {
-        "index" : taskId,
-        "sectionId" : sectionId
+      for (let section of sectionList) {
+        for (let task of section.taskList) {
+          if (task.index === Number(taskId)) {
+            (new Promise(function (resolve) {
+              store.dispatch("moveToTask", {
+                "index" : taskId,
+                "title" : task.title,
+                "description" : task.description,
+                sectionId,
+                "status" : task.taskStatusType
+              });
+              resolve("success");
+
+            })).then(function(_result) {
+              console.log(_result);
+            });
+          }
+        }
       }
-      
-      const promise = new Promise(function (resolve) {
-      store.dispatch("moveToTask", param);
-        resolve("success");
-      });
-
-      promise.then(function(_result) {
-      console.log(_result);
-    });
     }  
   },
-created() {
-    console.log('dddd');
+  created() {
     const store = this.$store;
-    console.log(store);
     const route = this.$route;
   
     const promise = new Promise(function (resolve) {
@@ -88,10 +101,10 @@ created() {
       resolve("success");
     });
 
-      promise.then(function(_result) {
-        console.log(_result);
-      });
-    }
+    promise.then(function(_result) {
+      console.log(_result);
+    });
   }
+}
 
 </script>
