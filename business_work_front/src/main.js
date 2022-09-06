@@ -59,9 +59,15 @@ const store = new Vuex.Store({
           context.commit("fetchAllData", response);
         });
       }
+    },
+    async additionalProject(context) {
+      await axios.post('http://localhost:8090/project/register')
+      .then(response => {
+        console.log(response);
+      });
     }, 
     async moveToTask(context, parameter) {
-      await axios.post('http://localhost:8090/task/update', parameter)
+      await axios.post('http://localhost:8090/task/updateSection', parameter)
       .then(response =>  {
         if (response && response.data && response.data.result) {
 

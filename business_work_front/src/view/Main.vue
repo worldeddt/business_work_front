@@ -5,10 +5,15 @@
         fixed
         app
     >
+    <v-spacer>
+      <div>
+        <v-btn elevation="2" x-small block :id="plus" @click="plusProject()"></v-btn>
+      </div>
+    </v-spacer>
       <v-list v-for="project in this.$store.getters.getProjectList" :key="project.index" dense>
         <v-list-item>
           <v-list-item-action>
-            <i class="fa-solid fa-list-check"></i>
+            <v-icon>fas fa-list</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title style="cursor: pointer" @click="routerProject(`${project.index}`)">{{project.title}}</v-list-item-title>
@@ -20,10 +25,19 @@
         color="grey lighten-4"
         flat
         tile>
-    <v-toolbar dark fixed>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Our Tasks</v-toolbar-title>
-      <v-spacer></v-spacer>
+    <v-toolbar
+color="deep-purple accent-4"
+    dark
+  elevation="5">
+      <v-icon @click.stop="drawer = !drawer">fas fa-list</v-icon>
+      <v-toolbar-title>
+        
+      </v-toolbar-title>
+      <v-spacer>
+        <v-icon large color="white darken-2">
+        mdi-folder-tree
+        </v-icon>
+      </v-spacer>
     </v-toolbar>
     </v-card>
     <v-main>
@@ -50,6 +64,14 @@ export default {
       if(this.$route.path !== `/project/${projectIndex}`) {
         this.$router.push({path:`/project/${projectIndex}`})
       }
+    },
+    plusProject() {
+      const store = this.$store;
+  
+      const promise = new Promise(function (resolve) {
+      store.dispatch("additionalProject");
+        resolve("success");
+      });
     }
   },
   watch : { 
