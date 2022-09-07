@@ -66,6 +66,36 @@ const store = new Vuex.Store({
         console.log(response);
       });
     }, 
+    async additionalTask(context) {
+      await axios.post('http://localhost:8090/task/register')
+      .then(response => {
+        console.log(response);
+      });
+    }, 
+    async additionalSection(context) {
+      await axios.post('http://localhost:8090/section/register')
+      .then(response => {
+        console.log(response);
+      });
+    }, 
+    async removeSection(context) {
+      await axios.post('http://localhost:8090/section/delete')
+      .then(response => {
+        console.log(response);
+      });
+    }, 
+    async removeTask(context) {
+      await axios.post('http://localhost:8090/task/delete')
+      .then(response => {
+        console.log(response);
+      });
+    }, 
+    async removeProject(context) {
+      await axios.post('http://localhost:8090/project/delete')
+      .then(response => {
+        console.log(response);
+      });
+    }, 
     async moveToTask(context, parameter) {
       await axios.post('http://localhost:8090/task/updateSection', parameter)
       .then(response =>  {
