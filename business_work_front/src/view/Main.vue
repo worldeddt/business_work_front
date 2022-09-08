@@ -5,11 +5,6 @@
         fixed
         app
     >
-    <v-spacer>
-      <div>
-        <v-btn elevation="2" x-small block :id="plus" @click="plusProject()"></v-btn>
-      </div>
-    </v-spacer>
       <v-list v-for="project in this.$store.getters.getProjectList" :key="project.index" dense>
         <v-list-item>
           <v-list-item-action>
@@ -20,6 +15,20 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-spacer>
+      <div class="col-sm-12 text-center">
+        <v-btn
+        :disabled="loading"
+        class="ma-1"
+        color="grey"
+        plain
+        @click="plusProject()">
+          <v-icon color="dark">
+            mdi-plus
+          </v-icon>
+        </v-btn>
+      </div>
+    </v-spacer>
     </v-navigation-drawer>
     <v-card
         color="grey lighten-4"
@@ -54,7 +63,8 @@ color="deep-purple accent-4"
 export default {
   data: () => ({
     drawer : false,
-    storeData : []
+    storeData : [],
+    loading : false
   }),
   props: {
     source: String
@@ -69,8 +79,15 @@ export default {
       const store = this.$store;
   
       const promise = new Promise(function (resolve) {
-      store.dispatch("additionalProject");
+        store.dispatch("additionalProject", {
+          title : "n 번째 프로젝트",
+          description : "응원해"
+        });
         resolve("success");
+      });
+
+      promise.then(function(_result) {
+        console.log(_result)
       });
     }
   },

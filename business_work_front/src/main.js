@@ -5,7 +5,6 @@ import './plugins/vuetify'
 import Vuex from 'vuex';
 import axios from 'axios';
 import App from './App.vue';
-// import store from './store/store';
 import vuetify from './plugins/vuetify'
 
 Vue.prototype.axios = axios;
@@ -60,37 +59,50 @@ const store = new Vuex.Store({
         });
       }
     },
-    async additionalProject(context) {
-      await axios.post('http://localhost:8090/project/register')
+    async additionalProject(context, param) {
+      await axios.post('http://localhost:8090/project/register', param)
       .then(response => {
-        console.log(response);
+        if (!response || !response.data) {
+          alert("결과를 확인할 수 없습니다.");
+        }
+
+        if (response.data.result !== 1) {
+          alert(`오류가 발생하였습니다. : ${response.data.message}`)
+        }
+
+        context.dispatch("delayAllProjectFetch")
       });
     }, 
     async additionalTask(context) {
+      console.log(context);
       await axios.post('http://localhost:8090/task/register')
       .then(response => {
         console.log(response);
       });
     }, 
     async additionalSection(context) {
+      console.log(context);
       await axios.post('http://localhost:8090/section/register')
       .then(response => {
         console.log(response);
       });
     }, 
     async removeSection(context) {
+      console.log(context);
       await axios.post('http://localhost:8090/section/delete')
       .then(response => {
         console.log(response);
       });
     }, 
     async removeTask(context) {
+      console.log(context);
       await axios.post('http://localhost:8090/task/delete')
       .then(response => {
         console.log(response);
       });
     }, 
     async removeProject(context) {
+      console.log(context);
       await axios.post('http://localhost:8090/project/delete')
       .then(response => {
         console.log(response);
