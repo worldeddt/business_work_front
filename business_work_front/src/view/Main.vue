@@ -82,8 +82,8 @@ export default {
       const modal = this.$modal;
 
       modal.show(ProjectRegister,{
-        width : '30%',
-        height : '50%',
+        // width : '30%',
+        // height : '900px',
         draggable : false 
       });
   

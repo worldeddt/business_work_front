@@ -10,7 +10,11 @@ import VModal from 'vue-js-modal'
 
 Vue.prototype.axios = axios;
 Vue.use(Vuex);
-Vue.use(VModal, { dynamic: true })
+Vue.use(VModal,{ 
+    dynamicDefaults : {
+      height: '30%'
+    }}
+  );
 Vue.config.productionTip = false
 
 const store = new Vuex.Store({
