@@ -51,10 +51,13 @@ export default {
     }),
     methods : {
       registerProject() {
+        const store = this.$store;
+        const title = this.projectTitle;
+        const desc = this.projectDesc;
         const promise = new Promise(function (resolve) {
-          this.$store.dispatch("additionalProject", {
-            title : this.projectTitle,
-            description : this.projectDesc
+          store.dispatch("additionalProject", {
+            title : title,
+            description : desc
           });
           resolve("success");
         });

@@ -107,11 +107,29 @@ const store = new Vuex.Store({
         console.log(response);
       });
     }, 
-    async removeProject(context) {
-      console.log(context);
-      await axios.post('http://localhost:8090/project/delete')
+    async updateProject(context, parameter) {
+      await axios.post('http://localhost:8090/project/update', parameter)
       .then(response => {
         console.log(response);
+      });
+    },
+    async removeProject(context, parameter) {
+      await axios.post('http://localhost:8090/project/delete', parameter)
+      .then(response => {
+        console.log(response);
+        if (response && response.data && response.data.result) {
+
+          if (Number(response.data.result) !== 1) {
+            alert(`삭제에 실패하였습니다. 결과 : ${response.data.message}`);
+            return;
+          }
+
+          alert("삭제하였습니다.");
+          
+        } else {
+          alert("수정에 실패하였습니다.");
+          return;
+        }
       });
     }, 
     async moveToTask(context, parameter) {

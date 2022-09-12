@@ -13,6 +13,22 @@
           <v-list-item-content>
             <v-list-item-title style="cursor: pointer" @click="routerProject(`${project.index}`)">{{project.title}}</v-list-item-title>
           </v-list-item-content>
+          <v-menu transition="scroll-x-reverse-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon class="ma-2" v-bind="attrs" v-on="on">fas fa-ellipsis-h</v-icon>
+            </template>
+            <v-list>
+              <v-list-item 
+                v-for="n in optionBtn"
+                :key="n"
+                link
+                style="width:10rem;"
+                class="text-center"
+              >
+                <v-list-item-title v-text="n" @click="modifyProject(`${optionBtnEn[n]}`, project.index)"></v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-list-item>
       </v-list>
       <v-spacer>
@@ -36,9 +52,9 @@
         flat
         tile>
     <v-toolbar
-color="deep-purple accent-4"
-    dark
-  elevation="5">
+      color="deep-purple accent-4"
+      dark
+      elevation="5">
       <v-icon @click.stop="drawer = !drawer">fas fa-list</v-icon>
       <v-toolbar-title>
         
@@ -67,13 +83,15 @@ export default {
     drawer : false,
     storeData : [],
     loading : false,
-    rules : []
+    optionBtnEn : {"삭제":"delete", "수정" : "update"},
+    optionBtn : ["삭제", "수정"]
   }),
   props: {
     source: String
   },
   methods : {
     routerProject(projectIndex) {
+      console.log(projectIndex);
       if(this.$route.path !== `/project/${projectIndex}`) {
         this.$router.push({path:`/project/${projectIndex}`})
       }
@@ -82,25 +100,31 @@ export default {
       const modal = this.$modal;
 
       modal.show(ProjectRegister,{
-        // width : '30%',
-        // height : '900px',
         draggable : false 
       });
-  
-      // const promise = new Promise(function (resolve) {
-      //   store.dispatch("additionalProject", {
-      //     title : "n 번째 프로젝트",
-      //     description : "응원해"
-      //   });
-      //   resolve("success");
-      // });
-
-      // promise.then(function(_result) {
-      //   console.log(_result)
-      // });
     },
-    insertProjectData() {
+    deleteProject(_projectIndex) {
+        const store = this.$store;
 
+        const promise = new Promise(function (resolve) {
+          store.dispatch("removeProject", {"projectId" : _projectIndex});
+          resolve("success");
+        });
+
+        promise.then(function(_result) {
+          console.log(_result)
+        });        
+    },
+    modifyProject(_flag, _projectIndex) {
+      if (!_projectIndex) alert("동작을 수행할 수 없습니다.");
+
+      if (_flag === "delete") {
+        this.deleteProject(_projectIndex)
+      }
+
+      if (_flag === "update") {
+        this.updateProject(_projectIndex);
+      }
     }
   },
   watch : { 
