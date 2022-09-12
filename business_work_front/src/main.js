@@ -6,9 +6,11 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import App from './App.vue';
 import vuetify from './plugins/vuetify'
+import VModal from 'vue-js-modal'
 
 Vue.prototype.axios = axios;
 Vue.use(Vuex);
+Vue.use(VModal, { dynamic: true })
 Vue.config.productionTip = false
 
 const store = new Vuex.Store({

@@ -20,9 +20,10 @@
         <v-btn
         :disabled="loading"
         class="ma-1"
+        width="100%"
         color="grey"
         plain
-        @click="plusProject()">
+        @click="showProjectRegister()">
           <v-icon color="dark">
             mdi-plus
           </v-icon>
@@ -59,12 +60,14 @@ color="deep-purple accent-4"
 </template>
 
 <script>
+import ProjectRegister from "./modal/ProjectRegister";
 
 export default {
   data: () => ({
     drawer : false,
     storeData : [],
-    loading : false
+    loading : false,
+    rules : []
   }),
   props: {
     source: String
@@ -75,20 +78,29 @@ export default {
         this.$router.push({path:`/project/${projectIndex}`})
       }
     },
-    plusProject() {
-      const store = this.$store;
-  
-      const promise = new Promise(function (resolve) {
-        store.dispatch("additionalProject", {
-          title : "n 번째 프로젝트",
-          description : "응원해"
-        });
-        resolve("success");
-      });
+    showProjectRegister() {
+      const modal = this.$modal;
 
-      promise.then(function(_result) {
-        console.log(_result)
+      modal.show(ProjectRegister,{
+        width : '30%',
+        height : '50%',
+        draggable : false 
       });
+  
+      // const promise = new Promise(function (resolve) {
+      //   store.dispatch("additionalProject", {
+      //     title : "n 번째 프로젝트",
+      //     description : "응원해"
+      //   });
+      //   resolve("success");
+      // });
+
+      // promise.then(function(_result) {
+      //   console.log(_result)
+      // });
+    },
+    insertProjectData() {
+
     }
   },
   watch : { 
