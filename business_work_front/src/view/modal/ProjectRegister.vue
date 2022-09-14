@@ -1,6 +1,8 @@
 <template>
 <v-card>
-<v-container style="overflow:auto; height:300px;">
+<v-container id="projectModal" style="overflow:auto; height:300px;"
+  @before-open="beforeOpen"
+>
   <v-form
     ref="form"
     v-model="form"
@@ -30,8 +32,14 @@
      @click="registerProject">
     저장
   </v-btn>
+  <v-btn
+      :loading="isLoading"
+      color="deep-purple accent-4"
+      depressed
+     @click="closeModal">
+    취소
+  </v-btn>
   </v-card-actions>
-  
   </v-container>
   </v-card> 
 </template>
@@ -66,6 +74,19 @@ export default {
           console.log(_result)
         });        
         
+      },
+      beforeOpen(event) {
+        console.log(event);
+        console.log('Opening...')
+      },
+      closeModal() {
+        document.getElementById('projectModal').modal('hide')
+
+
+        const modal = this.$modal;
+        modal.hide("ProjectRegister");
+
+        console.log(modal);
       }
     },
     mounted () {

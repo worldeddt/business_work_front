@@ -7,6 +7,7 @@ import axios from 'axios';
 import App from './App.vue';
 import vuetify from './plugins/vuetify'
 import VModal from 'vue-js-modal'
+import ProjectRegister from "./view/modal/ProjectRegister";
 
 Vue.prototype.axios = axios;
 Vue.use(Vuex);
@@ -66,18 +67,29 @@ const store = new Vuex.Store({
       }
     },
     async additionalProject(context, param) {
-      await axios.post('http://localhost:8090/project/register', param)
-      .then(response => {
-        if (!response || !response.data) {
-          alert("결과를 확인할 수 없습니다.");
-        }
+      console.log(param);
+      console.log(this.$modal);
+      this.$modal.hide(ProjectRegister);
+      return;
 
-        if (response.data.result !== 1) {
-          alert(`오류가 발생하였습니다. : ${response.data.message}`)
-        }
+      // await axios.post('http://localhost:8090/project/register', param)
+      // .then(response => {
+      //   if (!response || !response.data) {
+      //     alert("결과를 확인할 수 없습니다.");
+      //     return;
+      //   }
 
-        context.dispatch("delayAllProjectFetch")
-      });
+      //   if (response.data.result !== 1) {
+      //     alert(`오류가 발생하였습니다. : ${response.data.message}`)
+      //     return;
+      //   }
+
+      //   console.log(context);
+
+      //   this.$modal.hide(ProjectRegister);
+
+      //   context.dispatch("delayAllProjectFetch")
+      // });
     }, 
     async additionalTask(context) {
       console.log(context);
@@ -114,7 +126,11 @@ const store = new Vuex.Store({
       });
     },
     async removeProject(context, parameter) {
-      await axios.post('http://localhost:8090/project/delete', parameter)
+      if (!parameter || !parameter.projectId) alert("필수값이 누락되었습니다.")
+
+      let param = new URLSearchParams();
+      param.append('projectId', parameter.projectId);
+      await axios.post('http://localhost:8090/project/delete', param)
       .then(response => {
         console.log(response);
         if (response && response.data && response.data.result) {

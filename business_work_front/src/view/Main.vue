@@ -104,16 +104,40 @@ export default {
       });
     },
     deleteProject(_projectIndex) {
-        const store = this.$store;
+      const store = this.$store;
 
-        const promise = new Promise(function (resolve) {
-          store.dispatch("removeProject", {"projectId" : _projectIndex});
-          resolve("success");
-        });
+      const promise = new Promise(function (resolve) {
+        store.dispatch("removeProject", {"projectId" : _projectIndex});
+        resolve("success");
+      });
 
-        promise.then(function(_result) {
-          console.log(_result)
-        });        
+      promise.then(function(_result) {
+        console.log(_result)
+      });        
+    },
+    updateProject(_projectIndex) {
+      console.log(_projectIndex);
+      console.log(this.$store.getters.getProjectList)
+
+      for (let project of this.$store.getters.getProjectList) {
+        if (Number(project.index) === Number(_projectIndex)) {
+          project.title
+
+          modal.show(ProjectRegister,{
+            draggable : false 
+          },
+          function() {
+            console.log('test');
+          }); 
+        }
+      }
+    },
+    closeModal() {
+      const modal = this.$modal;
+
+      modal.show(ProjectRegister,{
+        draggable : false 
+      });
     },
     modifyProject(_flag, _projectIndex) {
       if (!_projectIndex) alert("동작을 수행할 수 없습니다.");
