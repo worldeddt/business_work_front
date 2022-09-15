@@ -90,7 +90,19 @@ export default {
           }
         }
       }
-    }  
+    }, 
+    updateSection() {
+
+    },
+    deleteSection() {
+
+    },
+    deleteTask() {
+
+    },
+    updateTask() {
+
+    }
   },
   created() {
     const store = this.$store;

@@ -39,7 +39,7 @@
         width="100%"
         color="grey"
         plain
-        @click="showProjectRegister()">
+        @click="openProjectRegister">
           <v-icon color="dark">
             mdi-plus
           </v-icon>
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import ProjectRegister from "./modal/ProjectRegister";
+
 
 export default {
   data: () => ({
@@ -96,13 +96,6 @@ export default {
         this.$router.push({path:`/project/${projectIndex}`})
       }
     },
-    showProjectRegister() {
-      const modal = this.$modal;
-
-      modal.show(ProjectRegister,{
-        draggable : false 
-      });
-    },
     deleteProject(_projectIndex) {
       const store = this.$store;
 
@@ -116,28 +109,17 @@ export default {
       });        
     },
     updateProject(_projectIndex) {
+      
       console.log(_projectIndex);
       console.log(this.$store.getters.getProjectList)
 
       for (let project of this.$store.getters.getProjectList) {
         if (Number(project.index) === Number(_projectIndex)) {
-          project.title
+          console.log(project.title);
 
-          modal.show(ProjectRegister,{
-            draggable : false 
-          },
-          function() {
-            console.log('test');
-          }); 
+          this.$store.commit('openProjectRegister');
         }
       }
-    },
-    closeModal() {
-      const modal = this.$modal;
-
-      modal.show(ProjectRegister,{
-        draggable : false 
-      });
     },
     modifyProject(_flag, _projectIndex) {
       if (!_projectIndex) alert("동작을 수행할 수 없습니다.");
@@ -149,6 +131,9 @@ export default {
       if (_flag === "update") {
         this.updateProject(_projectIndex);
       }
+    },
+    openProjectRegister() {
+      this.$store.commit('openProjectRegister', this.$modal)
     }
   },
   watch : { 

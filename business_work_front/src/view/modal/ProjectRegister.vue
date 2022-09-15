@@ -80,13 +80,7 @@ export default {
         console.log('Opening...')
       },
       closeModal() {
-        document.getElementById('projectModal').modal('hide')
-
-
-        const modal = this.$modal;
-        modal.hide("ProjectRegister");
-
-        console.log(modal);
+        this.$store.commit('closeProjectRegister', this.$modal)
       }
     },
     mounted () {

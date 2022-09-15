@@ -18,7 +18,7 @@ Vue.use(VModal,{
   );
 Vue.config.productionTip = false
 
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     allProjects : {},
     allData : {}
@@ -47,6 +47,16 @@ const store = new Vuex.Store({
           state.allData = returnValue;
         }
       }
+    },
+    openProjectRegister(state, _modal) {
+      _modal.show(ProjectRegister,{
+        draggable : false 
+      });
+      console.log(_modal);
+    },
+    closeProjectRegister(state, _modal) {
+      console.log(_modal);
+      _modal.hide();
     }
   },
   actions : {
