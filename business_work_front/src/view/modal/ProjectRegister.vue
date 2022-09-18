@@ -1,8 +1,6 @@
 <template>
 <v-card>
-<v-container id="projectModal" style="overflow:auto; height:300px;"
-  @before-open="beforeOpen"
->
+<v-container id="projectModal" style="overflow:auto; height:300px;">
   <v-form
     ref="form"
     v-model="form"
@@ -63,24 +61,32 @@ export default {
         const title = this.projectTitle;
         const desc = this.projectDesc;
         const promise = new Promise(function (resolve) {
-          store.dispatch("additionalProject", {
+          const response = store.dispatch("additionalProject", {
             title : title,
             description : desc
           });
-          resolve("success");
+
+          resolve(response);
         });
 
-        promise.then(function(_result) {
-          console.log(_result)
+        promise.then(function(_response) {
+          if (!_response || !_response.data) {
+          alert("결과를 확인할 수 없습니다.");
+          return;
+          }
+
+          if (_response.data.result !== 1) {
+            alert(`오류가 발생하였습니다. : ${_response.data.message}`)
+            return;
+          }
+
+          //todo alert 처리 필요 
+          
         });        
         
       },
-      beforeOpen(event) {
-        console.log(event);
-        console.log('Opening...')
-      },
       closeModal() {
-        this.$store.commit('closeProjectRegister', this.$modal)
+        this.$emit('close');
       }
     },
     mounted () {

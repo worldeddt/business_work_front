@@ -52,11 +52,6 @@ export const store = new Vuex.Store({
       _modal.show(ProjectRegister,{
         draggable : false 
       });
-      console.log(_modal);
-    },
-    closeProjectRegister(state, _modal) {
-      console.log(_modal);
-      _modal.hide();
     }
   },
   actions : {
@@ -77,29 +72,23 @@ export const store = new Vuex.Store({
       }
     },
     async additionalProject(context, param) {
-      console.log(param);
-      console.log(this.$modal);
-      this.$modal.hide(ProjectRegister);
-      return;
+      await axios.post('http://localhost:8090/project/register', param)
+      .then(response => {
+        if (!response || !response.data) {
+          alert("결과를 확인할 수 없습니다.");
+          return;
+        }
 
-      // await axios.post('http://localhost:8090/project/register', param)
-      // .then(response => {
-      //   if (!response || !response.data) {
-      //     alert("결과를 확인할 수 없습니다.");
-      //     return;
-      //   }
+        if (response.data.result !== 1) {
+          alert(`오류가 발생하였습니다. : ${response.data.message}`)
+          return;
+        }
 
-      //   if (response.data.result !== 1) {
-      //     alert(`오류가 발생하였습니다. : ${response.data.message}`)
-      //     return;
-      //   }
-
-      //   console.log(context);
-
-      //   this.$modal.hide(ProjectRegister);
-
-      //   context.dispatch("delayAllProjectFetch")
-      // });
+        return {
+          "result" : response.data.result,
+          "message" : response.data.message
+        }
+      });
     }, 
     async additionalTask(context) {
       console.log(context);
