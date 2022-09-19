@@ -12,6 +12,7 @@
   label="제목" 
   :rules="[rules.requiredTitle]"
   hide-details="auto">
+  {{projectTitle}}
   </v-text-field>
   <v-textarea 
   v-model="projectDesc"
@@ -19,7 +20,9 @@
   hide-details="auto"
   auto-grow
   height="auto"
-  ></v-textarea>
+  >
+  {{projectDesc}}
+  </v-textarea>
   </v-form>
   <v-card-actions class="text-right mt-4">
     <v-btn
@@ -56,34 +59,26 @@ export default {
       }
     }),
     methods : {
+      initProject(_index) {
+        console.log(_index);
+        this.$store.getters.getProjectList
+      },
       registerProject() {
         const store = this.$store;
         const title = this.projectTitle;
         const desc = this.projectDesc;
-        const promise = new Promise(function (resolve) {
-          const response = store.dispatch("additionalProject", {
+
+        (new Promise(function (resolve = null) {
+          store.dispatch("additionalProject", {
             title : title,
             description : desc
+          }, function(_result) {
+            resolve(_result);
           });
-
-          resolve(response);
+        })).then(_result => {
+          console.log(_result);
         });
 
-        promise.then(function(_response) {
-          if (!_response || !_response.data) {
-          alert("결과를 확인할 수 없습니다.");
-          return;
-          }
-
-          if (_response.data.result !== 1) {
-            alert(`오류가 발생하였습니다. : ${_response.data.message}`)
-            return;
-          }
-
-          //todo alert 처리 필요 
-          
-        });        
-        
       },
       closeModal() {
         this.$emit('close');

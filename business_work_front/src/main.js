@@ -49,6 +49,7 @@ export const store = new Vuex.Store({
       }
     },
     openProjectRegister(state, _modal) {
+      console.log(_modal);
       _modal.show(ProjectRegister,{
         draggable : false 
       });
@@ -71,57 +72,50 @@ export const store = new Vuex.Store({
         });
       }
     },
-    async additionalProject(context, param) {
-      await axios.post('http://localhost:8090/project/register', param)
-      .then(response => {
-        if (!response || !response.data) {
-          alert("결과를 확인할 수 없습니다.");
-          return;
-        }
-
-        if (response.data.result !== 1) {
-          alert(`오류가 발생하였습니다. : ${response.data.message}`)
-          return;
-        }
-
-        return {
-          "result" : response.data.result,
-          "message" : response.data.message
-        }
+    async additionalProject(context, param, responseBack) {
+      console.log({
+        responseBack,
+        param
       });
+      return;
+      // await axios.post('http://localhost:8090/project/register', param)
+      // .then(response => {
+      //   if (typeof responseBack === 'function') responseBack(response)
+      //   return response;
+      // });
     }, 
     async additionalTask(context) {
       console.log(context);
       await axios.post('http://localhost:8090/task/register')
       .then(response => {
-        console.log(response);
+        return response
       });
     }, 
     async additionalSection(context) {
       console.log(context);
       await axios.post('http://localhost:8090/section/register')
       .then(response => {
-        console.log(response);
+        return response
       });
     }, 
     async removeSection(context) {
       console.log(context);
       await axios.post('http://localhost:8090/section/delete')
       .then(response => {
-        console.log(response);
+        return response
       });
     }, 
     async removeTask(context) {
       console.log(context);
       await axios.post('http://localhost:8090/task/delete')
       .then(response => {
-        console.log(response);
+        return response
       });
     }, 
     async updateProject(context, parameter) {
       await axios.post('http://localhost:8090/project/update', parameter)
       .then(response => {
-        console.log(response);
+        return response
       });
     },
     async removeProject(context, parameter) {

@@ -109,15 +109,9 @@ export default {
       });        
     },
     updateProject(_projectIndex) {
-      
-      console.log(_projectIndex);
-      console.log(this.$store.getters.getProjectList)
-
       for (let project of this.$store.getters.getProjectList) {
         if (Number(project.index) === Number(_projectIndex)) {
-          console.log(project.title);
-
-          this.$store.commit('openProjectRegister');
+          this.$store.commit('openProjectRegister', this.$modal);
         }
       }
     },
