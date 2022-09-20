@@ -72,17 +72,19 @@ export const store = new Vuex.Store({
         });
       }
     },
-    async additionalProject(context, param, responseBack) {
-      console.log({
-        responseBack,
-        param
+    async additionalProject(context, param) {
+      await axios.post('http://localhost:8090/project/register', param)
+      .then(response => {
+        if (!response || !response.data || !response.date.result) {
+          if (response.data.message) alert(`등록에 실패하였습니다. 결과 : ${response.data.message}`);
+          else alert(`등록에 실패하였습니다.`);
+
+          return;
+        }
+
+        alert('등록 성공');
+
       });
-      return;
-      // await axios.post('http://localhost:8090/project/register', param)
-      // .then(response => {
-      //   if (typeof responseBack === 'function') responseBack(response)
-      //   return response;
-      // });
     }, 
     async additionalTask(context) {
       console.log(context);
