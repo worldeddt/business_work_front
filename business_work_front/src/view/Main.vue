@@ -37,7 +37,7 @@
         :disabled="loading"
         class="ma-1"
         width="100%"
-        color="grey"
+        color="black"
         plain
         @click="openProjectRegister">
           <v-icon color="dark">

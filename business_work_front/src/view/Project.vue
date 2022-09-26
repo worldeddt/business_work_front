@@ -31,6 +31,28 @@
   </div>
   </v-card>
   </div>
+  <v-spacer>
+      <div class="m-2 section">
+        <v-card class="pb-15">
+          <div class="overflow-y-auto" style="height:1000px;">
+            <div style="height:100%; align-items: center;">
+              <v-btn
+              :disabled="loading"
+              class="ma-1"
+              width="100%"
+              height="100%"
+              color="black"
+              plain
+              @click="addSection">
+                <v-icon color="dark">
+                mdi-plus
+                </v-icon>
+              </v-btn>
+            </div>
+          </div>
+        </v-card>
+      </div>
+    </v-spacer>
 </div>
 </div>
 </template>
@@ -90,7 +112,10 @@ export default {
           }
         }
       }
-    }, 
+    },
+    addSection() {
+      console.log("add Section")
+    },
     updateSection() {
 
     },

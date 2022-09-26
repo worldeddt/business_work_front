@@ -9,6 +9,9 @@ import vuetify from './plugins/vuetify'
 import VModal from 'vue-js-modal'
 import ProjectRegister from "./view/modal/ProjectRegister";
 
+export const TYPE_OF_SUCCESS = "success";
+export const TYPE_OF_FAIL = "fail";
+
 Vue.prototype.axios = axios;
 Vue.use(Vuex);
 Vue.use(VModal,{ 
@@ -75,7 +78,7 @@ export const store = new Vuex.Store({
     async additionalProject(context, param) {
       await axios.post('http://localhost:8090/project/register', param)
       .then(response => {
-        if (!response || !response.data || !response.date.result) {
+        if (!response || !response.data || !response.data.result) {
           if (response.data.message) alert(`등록에 실패하였습니다. 결과 : ${response.data.message}`);
           else alert(`등록에 실패하였습니다.`);
 
@@ -83,9 +86,33 @@ export const store = new Vuex.Store({
         }
 
         alert('등록 성공');
+        window.location.reload();
 
       });
     }, 
+    async removeProject(context, parameter) {
+      if (!parameter || !parameter.projectId) alert("필수값이 누락되었습니다.")
+
+      let param = new URLSearchParams();
+      param.append('projectId', parameter.projectId);
+      await axios.post('http://localhost:8090/project/delete', param)
+      .then(response => {
+        if (response && response.data && response.data.result) {
+
+          if (Number(response.data.result) !== 1) {
+            alert(`삭제에 실패하였습니다. 결과 : ${response.data.message}`);
+            return;
+          }
+
+          alert("삭제하였습니다.");
+          window.location.reload();
+        
+        } else {
+          alert("수정에 실패하였습니다.");
+          return;
+        }
+      });
+    },
     async additionalTask(context) {
       console.log(context);
       await axios.post('http://localhost:8090/task/register')
@@ -118,29 +145,6 @@ export const store = new Vuex.Store({
       await axios.post('http://localhost:8090/project/update', parameter)
       .then(response => {
         return response
-      });
-    },
-    async removeProject(context, parameter) {
-      if (!parameter || !parameter.projectId) alert("필수값이 누락되었습니다.")
-
-      let param = new URLSearchParams();
-      param.append('projectId', parameter.projectId);
-      await axios.post('http://localhost:8090/project/delete', param)
-      .then(response => {
-        console.log(response);
-        if (response && response.data && response.data.result) {
-
-          if (Number(response.data.result) !== 1) {
-            alert(`삭제에 실패하였습니다. 결과 : ${response.data.message}`);
-            return;
-          }
-
-          alert("삭제하였습니다.");
-          
-        } else {
-          alert("수정에 실패하였습니다.");
-          return;
-        }
       });
     }, 
     async moveToTask(context, parameter) {

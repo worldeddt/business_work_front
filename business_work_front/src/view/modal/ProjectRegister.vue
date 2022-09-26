@@ -68,12 +68,14 @@ export default {
         const title = this.projectTitle;
         const desc = this.projectDesc;
 
-        const register = store.dispatch("additionalProject", {
+        const promise = store.dispatch("additionalProject", {
           title : title,
           description : desc
         });
 
-
+        promise.then(function(_result) {
+          console.log(_result)
+        });       
       },
       closeModal() {
         this.$emit('close');
