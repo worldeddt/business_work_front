@@ -9,6 +9,7 @@ import vuetify from './plugins/vuetify'
 import VModal from 'vue-js-modal'
 import ProjectRegister from "./view/modal/ProjectRegister";
 import SectionRegister from "./view/modal/SectionRegister";
+import TaskRegister from "./view/modal/TaskRegister";
 
 export const TYPE_OF_SUCCESS = "success";
 export const TYPE_OF_FAIL = "fail";
@@ -63,6 +64,11 @@ export const store = new Vuex.Store({
     },
     openSectionRegister(state, modal) {
       modal.show(SectionRegister,{
+        draggable : false 
+      });
+    },
+    openTaskRegister(state, modal) {
+      modal.show(TaskRegister,{
         draggable : false 
       });
     }

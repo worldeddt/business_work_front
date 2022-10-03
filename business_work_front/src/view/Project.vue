@@ -27,41 +27,25 @@
           </v-btn>
         </v-card-actions>
     </v-card>
-  </v-col> 
+  </v-col>
+  <v-spacer>
+      <div class="col-sm-12 text-center">
+        <v-btn
+        :disabled="loading"
+        class="ma-1"
+        width="100%"
+        color="black"
+        plain
+        @click="openTaskRegister">
+          <v-icon color="dark">
+            mdi-plus
+          </v-icon>
+        </v-btn>
+      </div>
+    </v-spacer> 
   </div>
   </v-card>
   </div>
-<!--section for register-->
-<div v-for="section in this.$store.state.allData.sectionList" :key="section.index" class="m-2 section" 
-  style="min-height:100%;position:relative;">
-  <v-card class="pb-15" @drop="drop($event, section.index)" @dragover="allowDrop($event)">
-  <v-card-title v-text="section.title"></v-card-title>
-  <div class="overflow-y-auto" style="height:1000px;">
-    <v-col v-for="task in section.taskList" :key="task.title">
-    <v-card :id="task.index" draggable="true" @dragstart="drag($event)" >
-      <v-checkbox v-model="todoCheck"></v-checkbox>
-      <v-card-title v-text="task.title"></v-card-title>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn icon>
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
-
-          <v-btn icon>
-            <v-icon>mdi-bookmark</v-icon>
-          </v-btn>
-
-          <v-btn icon>
-            <v-icon>mdi-share-variant</v-icon>
-          </v-btn>
-        </v-card-actions>
-    </v-card>
-  </v-col> 
-  </div>
-</v-card>
-</div>
-
   <v-spacer>
       <div class="m-2 section">
         <v-card class="pb-15">
@@ -157,6 +141,9 @@ export default {
     },
     updateTask() {
 
+    },
+    openTaskRegister() {
+      this.$store.commit('openTaskRegister', this.$modal)
     }
   },
   created() {
