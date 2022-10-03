@@ -73,7 +73,7 @@
               height="100%"
               color="black"
               plain
-              @click="addSection">
+              @click="addSection()">
                 <v-icon color="dark">
                 mdi-plus
                 </v-icon>

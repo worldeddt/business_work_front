@@ -25,7 +25,8 @@ Vue.config.productionTip = false
 export const store = new Vuex.Store({
   state: {
     allProjects : {},
-    allData : {}
+    allData : {},
+    currentProjectIndex : null
   },
   getters : {
     getProjectList(state) {
@@ -33,6 +34,9 @@ export const store = new Vuex.Store({
     },
     getAllData(state) {
       return state.allData;
+    },
+    getCurrentProjectIndex(state) {
+      return state.currentProjectIndex;
     }
   },
   mutations: {
@@ -76,11 +80,13 @@ export const store = new Vuex.Store({
         param.append('projectId', parameter.projectId);
         await axios.post('http://localhost:8090/project/template', param)
         .then(response => {
+          context.state.currentProjectIndex = parameter.projectId;
           context.commit("fetchAllData", response);
         });
       }
     },
     async additionalProject(context, param) {
+      console.log(param);
       await axios.post('http://localhost:8090/project/register', param)
       .then(response => {
         if (!response || !response.data || !response.data.result) {
@@ -125,11 +131,21 @@ export const store = new Vuex.Store({
         return response
       });
     }, 
-    async additionalSection(context) {
-      console.log(context);
-      await axios.post('http://localhost:8090/section/register')
+    async additionalSection(context, param) {
+      console.log(param);
+      await axios.post('http://localhost:8090/section/register', param)
       .then(response => {
-        return response
+
+        if (!response || !response.data || !response.data.result) {
+          if (response.data.message) alert(`등록에 실패하였습니다. 결과 : ${response.data.message}`);
+          else alert(`등록에 실패하였습니다.`);
+
+          return;
+        } else {
+          alert('등록 성공');
+        }
+
+        window.location.reload();
       });
     }, 
     async removeSection(context) {
