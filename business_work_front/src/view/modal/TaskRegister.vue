@@ -1,27 +1,27 @@
 <template>
 <v-card>
-<v-container id="sectionModal" style="overflow:auto; height:300px;">
+<v-container id="taskModal" style="overflow:auto; height:300px;">
   <v-form
     ref="form"
     v-model="form"
   >
 <v-text-field 
-  v-model="sectionTitle"
+  v-model="taskTitle"
   filled
   color="deep-purple"
   label="제목" 
   :rules="[rules.requiredTitle]"
   hide-details="auto">
-  {{sectionTitle}}
+  {{taskTitle}}
   </v-text-field>
   <v-textarea 
-  v-model="sectionDesc"
+  v-model="taskDesc"
   label="설명" 
   hide-details="auto"
   auto-grow
   height="auto"
   >
-  {{sectionDesc}}
+  {{taskDesc}}
   </v-textarea>
   </v-form>
   <v-card-actions class="text-right mt-4">
@@ -30,7 +30,7 @@
         :loading="isLoading"
         color="deep-purple accent-4"
         depressed
-     @click="registerSection">
+     @click="registerTask">
     저장
   </v-btn>
   <v-btn
@@ -47,10 +47,10 @@
 
 <script>
 export default {
-    name: 'SectionRegister',
+    name: 'TaskRegister',
     data: () => ({
-      sectionTitle : "",
-      sectionDesc : "",
+      taskTitle : "",
+      taskDesc : "",
       dialog: false,
       form: false,
       isLoading: false,
@@ -59,12 +59,12 @@ export default {
       }
     }),
     methods : {
-      registerSection() {
+      registerTask() {
         const store = this.$store;
-        const title = this.sectionTitle;
-        const desc = this.sectionDesc;
+        const title = this.taskTitle;
+        const desc = this.taskDesc;
 
-        const promise = store.dispatch("additionalSection", {
+        const promise = store.dispatch("additionalTask", {
           title : title,
           description : desc,
           projectId : store.getters.getCurrentProjectIndex
