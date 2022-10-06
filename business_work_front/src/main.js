@@ -92,7 +92,6 @@ export const store = new Vuex.Store({
       }
     },
     async additionalProject(context, param) {
-      console.log(param);
       await axios.post('http://localhost:8090/project/register', param)
       .then(response => {
         if (!response || !response.data || !response.data.result) {
@@ -130,11 +129,23 @@ export const store = new Vuex.Store({
         }
       });
     },
-    async additionalTask(context) {
-      console.log(context);
-      await axios.post('http://localhost:8090/task/register')
+    async additionalTask(context, param) {
+      let parameters = new URLSearchParams();
+      parameters.append('title', param.title);
+      parameters.append('description', param.description);
+      parameters.append('sectionId', param.sectionId);
+
+      await axios.post('http://localhost:8090/task/register', parameters)
       .then(response => {
-        return response
+        if (!response || !response.data || !response.data.result) {
+          if (response.data.message) alert(`등록에 실패하였습니다. 결과 : ${response.data.message}`);
+          else alert(`등록에 실패하였습니다.`);
+
+          return;
+        }
+
+        alert('등록 성공');
+        window.location.reload();
       });
     }, 
     async additionalSection(context, param) {
