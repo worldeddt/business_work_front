@@ -27,7 +27,8 @@ export const store = new Vuex.Store({
   state: {
     allProjects : {},
     allData : {},
-    currentProjectIndex : null
+    currentProjectIndex : null,
+    currentSelectedSection : null
   },
   getters : {
     getProjectList(state) {
@@ -130,12 +131,7 @@ export const store = new Vuex.Store({
       });
     },
     async additionalTask(context, param) {
-      let parameters = new URLSearchParams();
-      parameters.append('title', param.title);
-      parameters.append('description', param.description);
-      parameters.append('sectionId', param.sectionId);
-
-      await axios.post('http://localhost:8090/task/register', parameters)
+      await axios.post('http://localhost:8090/task/register', param)
       .then(response => {
         if (!response || !response.data || !response.data.result) {
           if (response.data.message) alert(`등록에 실패하였습니다. 결과 : ${response.data.message}`);
@@ -149,7 +145,6 @@ export const store = new Vuex.Store({
       });
     }, 
     async additionalSection(context, param) {
-      console.log(param);
       await axios.post('http://localhost:8090/section/register', param)
       .then(response => {
 
@@ -165,9 +160,9 @@ export const store = new Vuex.Store({
         window.location.reload();
       });
     }, 
-    async removeSection(context) {
+    async removeSection(context, param) {
       console.log(context);
-      await axios.post('http://localhost:8090/section/delete')
+      await axios.post('http://localhost:8090/section/delete', param)
       .then(response => {
         return response
       });

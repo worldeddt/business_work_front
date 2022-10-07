@@ -64,10 +64,12 @@ export default {
         const title = this.taskTitle;
         const desc = this.taskDesc;
 
+        console.log(this.$store.state.currentSelectedSection);
+
         const promise = store.dispatch("additionalTask", {
           title : title,
           description : desc,
-          projectId : store.getters.getCurrentProjectIndex
+          sectionId : this.$store.state.currentSelectedSection
         });
 
         promise.then(function(_result) {

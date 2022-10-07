@@ -31,12 +31,11 @@
   <v-spacer>
       <div class="col-sm-12 text-center">
         <v-btn
-        :disabled="loading"
         class="ma-1"
         width="100%"
         color="black"
         plain
-        @click="openTaskRegister">
+        @click="openTaskRegister(section.index)">
           <v-icon color="dark">
             mdi-plus
           </v-icon>
@@ -142,7 +141,8 @@ export default {
     updateTask() {
 
     },
-    openTaskRegister() {
+    openTaskRegister(sectionId) {
+      this.$store.state.currentSelectedSection = sectionId;
       this.$store.commit('openTaskRegister', this.$modal)
     }
   },
