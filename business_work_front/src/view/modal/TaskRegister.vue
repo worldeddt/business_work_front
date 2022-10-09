@@ -64,17 +64,13 @@ export default {
         const title = this.taskTitle;
         const desc = this.taskDesc;
 
-        console.log(this.$store.state.currentSelectedSection);
-
         const promise = store.dispatch("additionalTask", {
           title : title,
           description : desc,
           sectionId : this.$store.state.currentSelectedSection
         });
 
-        promise.then(function(_result) {
-          console.log(_result)
-        });       
+        promise.then();       
       },
       closeModal() {
         this.$emit('close');
