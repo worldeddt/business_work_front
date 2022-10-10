@@ -195,6 +195,11 @@ export const store = new Vuex.Store({
           return;
         }
       })
+      .catch(reject => {
+        console.log(reject);
+        alert("수정에 실패하였습니다.");
+        return;
+      })
     }
   }
 });
