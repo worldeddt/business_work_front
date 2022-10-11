@@ -9,7 +9,25 @@
   <div class="overflow-y-auto" style="height:1000px;">
     <v-col v-for="task in section.taskList" :key="task.title" :id="task.index" draggable="true" @dragstart="drag($event)">
       <v-card>
-        <div class="text-right"><v-btn icon><v-icon>mdi-dots-vertical</v-icon></v-btn></div>
+        <div class="text-right">
+
+          <v-menu>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn icon 
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+          <v-list-item>
+            <v-list-item-title @click="modifyTask()" >수정하기</v-list-item-title>
+          </v-list-item>
+        </v-list>
+          </v-menu>
+          
+        </div>
         <v-card-title v-text="task.title"></v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -139,8 +157,16 @@ export default {
         }
       })
     },
-    updateTask() {
-
+    modifyTask() {
+      Swal.fire({
+        title: '삭제',
+        text: '삭제 하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton:true,
+        cancelButtonText : '취소'
+      }).then((_result) => {
+        console.log(_result);
+      })
     },
     openTaskRegister(sectionId) {
       this.$store.state.currentSelectedSection = sectionId;
