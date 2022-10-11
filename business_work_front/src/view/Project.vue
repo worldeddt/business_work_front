@@ -14,7 +14,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-          <v-btn icon>
+          <v-btn icon @click="deleteTask(task.index)">
             <v-icon>
               mdi-delete
             </v-icon>
@@ -65,6 +65,9 @@
 </template>
 
 <script>
+
+import Swal from 'sweetalert2';
+
 export default {
   name : 'project',
   data: () => ({
@@ -123,8 +126,18 @@ export default {
     deleteSection() {
 
     },
-    deleteTask() {
-
+    deleteTask(taskId) {
+      Swal.fire({
+        title: '삭제',
+        text: '삭제 하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton:true,
+        cancelButtonText : '취소'
+      }).then((_result) => {
+        if (_result.isConfirmed) {
+          this.$store.dispatch("removeTask",taskId);
+        }
+      })
     },
     updateTask() {
 

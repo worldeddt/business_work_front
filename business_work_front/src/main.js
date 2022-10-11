@@ -10,6 +10,7 @@ import VModal from 'vue-js-modal'
 import ProjectRegister from "./view/modal/ProjectRegister";
 import SectionRegister from "./view/modal/SectionRegister";
 import TaskRegister from "./view/modal/TaskRegister";
+import Swal from 'sweetalert2';
 
 export const TYPE_OF_SUCCESS = "success";
 export const TYPE_OF_FAIL = "fail";
@@ -167,12 +168,37 @@ export const store = new Vuex.Store({
         return response
       });
     }, 
-    async removeTask(context) {
-      console.log(context);
-      await axios.post('http://localhost:8090/task/delete')
-      .then(response => {
-        return response
-      });
+    async removeTask(context, taskId) {
+      let param = new URLSearchParams();
+      param.append('taskIndex', taskId);
+      
+      await axios.post('http://localhost:8090/task/delete', param)
+      .then(response =>  {
+        if (response && response.data && response.data.result) {
+
+          if (Number(response.data.result) !== 1) {
+            alert(`삭제에 실패하였습니다. 결과 : ${response.data.message}`);
+            return;
+          }
+
+          Swal.fire({
+            text: '삭제 완료',
+            icon:'info',
+            confirmButtonText: '확인',
+          }).then((_result) => {
+            if (_result.isConfirmed) window.location.reload();
+          })
+          
+        } else {
+          alert("삭제에 실패하였습니다.");
+          return;
+        }
+      })
+      .catch(reject => {
+        console.log(reject);
+        alert("삭제에 실패하였습니다.");
+        return;
+      })
     }, 
     async updateProject(context, parameter) {
       await axios.post('http://localhost:8090/project/update', parameter)
