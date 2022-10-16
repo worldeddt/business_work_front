@@ -29,7 +29,9 @@ export const store = new Vuex.Store({
     allProjects : {},
     allData : {},
     currentProjectIndex : null,
-    currentSelectedSection : null
+    currentSelectedSection : null,
+    taskIndex : null,
+    currentSelectedTask : null
   },
   getters : {
     getProjectList(state) {

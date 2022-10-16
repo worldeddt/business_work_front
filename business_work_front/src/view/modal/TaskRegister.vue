@@ -26,13 +26,13 @@
   </v-form>
   <v-card-actions class="text-right mt-4">
     <v-btn
-        :disabled="!form"
-        :loading="isLoading"
-        color="deep-purple accent-4"
-        depressed
+      :disabled="!form"
+      :loading="isLoading"
+      color="deep-purple accent-4"
+      depressed
      @click="registerTask">
     저장
-  </v-btn>
+    </v-btn>
   <v-btn
       :loading="isLoading"
       color="deep-purple accent-4"

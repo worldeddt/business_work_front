@@ -22,7 +22,7 @@
           </template>
           <v-list>
           <v-list-item>
-            <v-list-item-title @click="modifyTask()" >수정하기</v-list-item-title>
+            <v-list-item-title @click="modifyTask(task.index)" >수정하기</v-list-item-title>
           </v-list-item>
         </v-list>
           </v-menu>
@@ -157,16 +157,12 @@ export default {
         }
       })
     },
-    modifyTask() {
-      Swal.fire({
-        title: '삭제',
-        text: '삭제 하시겠습니까?',
-        confirmButtonText: '확인',
-        showCancelButton:true,
-        cancelButtonText : '취소'
-      }).then((_result) => {
-        console.log(_result);
-      })
+    modifyTask(taskId) {
+      console.log(this.$store.state.currentSelectedTask)
+      console.log(this.$store.state.allData)
+      console.log(taskId);
+      
+      this.$store.commit('openTaskRegister', this.$modal)
     },
     openTaskRegister(sectionId) {
       this.$store.state.currentSelectedSection = sectionId;
