@@ -22,7 +22,7 @@
           </template>
           <v-list>
           <v-list-item>
-            <v-list-item-title @click="modifyTask(task.index)" >수정하기</v-list-item-title>
+            <v-list-item-title @click="modifyTask(task)" >수정하기</v-list-item-title>
           </v-list-item>
         </v-list>
           </v-menu>
@@ -157,12 +157,11 @@ export default {
         }
       })
     },
-    modifyTask(taskId) {
-      console.log(this.$store.state.currentSelectedTask)
-      console.log(this.$store.state.allData)
-      console.log(taskId);
-      
-      this.$store.commit('openTaskRegister', this.$modal)
+    modifyTask(task) {
+      this.$store.commit('openTaskModify', {
+        "modal" : this.$modal,
+        task
+        })
     },
     openTaskRegister(sectionId) {
       this.$store.state.currentSelectedSection = sectionId;

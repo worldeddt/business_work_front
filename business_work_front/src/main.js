@@ -42,6 +42,9 @@ export const store = new Vuex.Store({
     },
     getCurrentProjectIndex(state) {
       return state.currentProjectIndex;
+    },
+    getCurrentSelectedTask(state) {
+      return state.currentSelectedTask;
     }
   },
   mutations: {
@@ -74,6 +77,22 @@ export const store = new Vuex.Store({
     openTaskRegister(state, modal) {
       modal.show(TaskRegister,{
         draggable : false 
+      });
+    },
+    openTaskModify(state, _param) {
+      /**
+       description
+      index
+      lastModifyDate
+      registerDate
+      section
+      taskStatusType
+      title
+       */
+      state.currentSelectedTask = _param.task;
+
+      _param.modal.show(TaskRegister, {
+        draggable : false
       });
     }
   },

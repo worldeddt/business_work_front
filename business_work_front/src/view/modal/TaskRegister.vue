@@ -77,6 +77,23 @@ export default {
       }
     },
     mounted () {
+    },
+    created () {
+      /**
+       description
+      index
+      lastModifyDate
+      registerDate
+      section
+      taskStatusType
+      title
+       */
+      if (this.this.$store.getters.getCurrentSelectedTask.title)
+      this.taskTitle = this.this.$store.getters.getCurrentSelectedTask.title;
+
+      if (this.this.$store.getters.getCurrentSelectedTask.description)
+      this.taskDesc = this.taskTitle = this.this.$store.getters.getCurrentSelectedTask.title;
+
     }
 }
 </script>
