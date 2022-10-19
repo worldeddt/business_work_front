@@ -32,7 +32,7 @@
       :loading="isLoading"
       color="deep-purple accent-4"
       depressed
-     @click="registerTask">
+     @click="modifyTask">
     저장
     </v-btn>
   <v-btn
@@ -61,15 +61,14 @@ export default {
       }
     }),
     methods : {
-      registerTask() {
+      modifyTask() {
         const store = this.$store;
-        const title = this.taskTitle;
-        const desc = this.taskDesc;
 
-        const promise = store.dispatch("additionalTask", {
-          title : title,
-          description : desc,
-          sectionId : this.$store.state.currentSelectedSection
+        const promise = store.dispatch("modifyTask", {
+          index : store.getters.getCurrentSelectedTask.index,
+          title : this.taskTitle,
+          description : this.taskDesc,
+          sectionId : store.state.currentSelectedSection
         });
 
         promise.then();       
@@ -94,9 +93,6 @@ export default {
 
       document.getElementById("taskTitle").value = "";
       document.getElementById("taskDesc").value = "";
-
-      console.log(this.taskDesc);
-      console.log(document.getElementById("taskDesc").value);
 
       if (!this.$store.getters.getCurrentSelectedTask) return;
     

@@ -10,6 +10,7 @@ import VModal from 'vue-js-modal'
 import ProjectRegister from "./view/modal/ProjectRegister";
 import SectionRegister from "./view/modal/SectionRegister";
 import TaskRegister from "./view/modal/TaskRegister";
+import TaskModify from "./view/modal/TaskModify";
 import Swal from 'sweetalert2';
 
 export const TYPE_OF_SUCCESS = "success";
@@ -91,7 +92,7 @@ export const store = new Vuex.Store({
        */
       state.currentSelectedTask = _param.task;
 
-      _param.modal.show(TaskRegister, {
+      _param.modal.show(TaskModify, {
         draggable : false
       });
     }
@@ -165,7 +166,21 @@ export const store = new Vuex.Store({
         alert('등록 성공');
         window.location.reload();
       });
-    }, 
+    },
+    async modifyTask(context, param) {
+      await axios.post('http://localhost:8090/task/update', param)
+      .then(response => {
+        if (!response || !response.data || !response.data.result) {
+          if (response.data.message) alert(`등록에 실패하였습니다. 결과 : ${response.data.message}`);
+          else alert(`등록에 실패하였습니다.`);
+
+          return;
+        }
+
+        alert('수정 성공');
+        window.location.reload();
+      });
+    },  
     async additionalSection(context, param) {
       await axios.post('http://localhost:8090/section/register', param)
       .then(response => {
