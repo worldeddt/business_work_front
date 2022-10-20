@@ -11,6 +11,7 @@ import ProjectRegister from "./view/modal/ProjectRegister";
 import SectionRegister from "./view/modal/SectionRegister";
 import TaskRegister from "./view/modal/TaskRegister";
 import TaskModify from "./view/modal/TaskModify";
+import SectionModify from "./view/modal/SectionModify";
 import Swal from 'sweetalert2';
 
 export const TYPE_OF_SUCCESS = "success";
@@ -46,6 +47,9 @@ export const store = new Vuex.Store({
     },
     getCurrentSelectedTask(state) {
       return state.currentSelectedTask;
+    },
+    getCurrentSelectedSection(state) {
+      return state.currentSelectedSection;
     }
   },
   mutations: {
@@ -93,6 +97,16 @@ export const store = new Vuex.Store({
       state.currentSelectedTask = _param.task;
 
       _param.modal.show(TaskModify, {
+        draggable : false
+      });
+    },
+    openSectionModify(state, _param) {
+      
+    
+      console.log(_param.section);
+      state.currentSelectedSection = _param.section;
+
+      _param.modal.show(SectionModify, {
         draggable : false
       });
     }
@@ -181,6 +195,21 @@ export const store = new Vuex.Store({
         window.location.reload();
       });
     },  
+    async modifySection(context, param) {
+      console.log(param);
+      await axios.post('http://localhost:8090/section/update', param)
+      .then(response => {
+        if (!response || !response.data || !response.data.result) {
+          if (response.data.message) alert(`등록에 실패하였습니다. 결과 : ${response.data.message}`);
+          else alert(`등록에 실패하였습니다.`);
+
+          return;
+        }
+
+        alert('수정 성공');
+        window.location.reload();
+      });
+    },
     async additionalSection(context, param) {
       await axios.post('http://localhost:8090/section/register', param)
       .then(response => {

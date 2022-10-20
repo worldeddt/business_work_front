@@ -99,8 +99,6 @@ export default {
       if (this.$store.getters.getCurrentSelectedTask.title) this.taskTitle = this.$store.getters.getCurrentSelectedTask.title;
 
       if (this.$store.getters.getCurrentSelectedTask.description) this.taskDesc = this.$store.getters.getCurrentSelectedTask.description;
-    },
-    created () {
     }
 }
 </script>

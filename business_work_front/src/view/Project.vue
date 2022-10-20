@@ -6,11 +6,25 @@
   style="min-height:100%;position:relative;">
   <v-card class="pb-15" @drop="drop($event, section.index)" @dragover="allowDrop($event)">
   <v-card-title v-text="section.title"></v-card-title>
+  <v-menu>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn icon 
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+          <v-list-item>
+            <v-list-item-title @click="modifySection(section)" >수정하기</v-list-item-title>
+          </v-list-item>
+        </v-list>
+          </v-menu>
   <div class="overflow-y-auto" style="height:1000px;">
     <v-col v-for="task in section.taskList" :key="task.title" :id="task.index" draggable="true" @dragstart="drag($event)">
       <v-card>
         <div class="text-right">
-
           <v-menu>
           <template v-slot:activator="{on, attrs}">
             <v-btn icon 
@@ -161,6 +175,12 @@ export default {
       this.$store.commit('openTaskModify', {
         "modal" : this.$modal,
         task
+        })
+    },
+    modifySection(section) {
+      this.$store.commit('openSectionModify', {
+        "modal" : this.$modal,
+        section
         })
     },
     openTaskRegister(sectionId) {
