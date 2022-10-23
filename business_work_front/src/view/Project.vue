@@ -5,8 +5,11 @@
 <div v-for="section in this.$store.state.allData.sectionList" :key="section.index" class="m-2 section" 
   style="min-height:100%;position:relative;">
   <v-card class="pb-15" @drop="drop($event, section.index)" @dragover="allowDrop($event)">
-  <v-card-title v-text="section.title"></v-card-title>
-  <v-menu>
+    <div class="d-flex" >
+    <v-card-title v-text="section.title"></v-card-title>
+  
+<div class="mt-4" style="width: 100%; text-align: right;">
+<v-menu>
           <template v-slot:activator="{on, attrs}">
             <v-btn icon 
               v-bind="attrs"
@@ -20,7 +23,13 @@
             <v-list-item-title @click="modifySection(section)" >수정하기</v-list-item-title>
           </v-list-item>
         </v-list>
-          </v-menu>
+      </v-menu>
+  
+    </div>
+    
+      
+    </div>
+  
   <div class="overflow-y-auto" style="height:1000px;">
     <v-col v-for="task in section.taskList" :key="task.title" :id="task.index" draggable="true" @dragstart="drag($event)">
       <v-card>
