@@ -226,11 +226,31 @@ export const store = new Vuex.Store({
         window.location.reload();
       });
     }, 
-    async removeSection(context, param) {
-      console.log(context);
+    async removeSection(context, sectionId) {
+      let param = new URLSearchParams();
+      param.append('taskIndex', sectionId);
+
       await axios.post('http://localhost:8090/section/delete', param)
       .then(response => {
-        return response
+        if (response && response.data && response.data.result) {
+
+          if (Number(response.data.result) !== 1) {
+            alert(`삭제에 실패하였습니다. 결과 : ${response.data.message}`);
+            return;
+          }
+
+          Swal.fire({
+            text: '삭제 완료',
+            icon:'info',
+            confirmButtonText: '확인',
+          }).then((_result) => {
+            if (_result.isConfirmed) window.location.reload();
+          })
+          
+        } else {
+          alert("삭제에 실패하였습니다.");
+          return;
+        }
       });
     }, 
     async removeTask(context, taskId) {

@@ -18,10 +18,15 @@
               <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
           </template>
-          <v-list>
-          <v-list-item>
-            <v-list-item-title @click="modifySection(section)" >수정하기</v-list-item-title>
-          </v-list-item>
+          <v-list v-for="option in options" v-bind:key="option">
+            <v-list-item-group>
+              <v-list-item>
+                <v-list-item-content>
+                    <v-list-item-title v-if='option === "mod"' @click="modifySection(section)" >수정하기</v-list-item-title>
+                    <v-list-item-title v-if='option === "del"' @click="deleteSection(section)" >삭제하기</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
         </v-list>
       </v-menu>
   
@@ -114,7 +119,8 @@ export default {
   data: () => ({
     todoCheck : false,
     tasks: [],
-    sections: []
+    sections: [],
+    options:["mod", "del"]
   }),
   methods : {
     drag(ev) {
@@ -164,8 +170,27 @@ export default {
     updateSection() {
 
     },
-    deleteSection() {
+    deleteSection(section) {
+      Swal.fire({
+        title: '삭제',
+        text: '삭제 하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton:true,
+        cancelButtonText : '취소'
+      }).then((_result) => {
+        if (!section) {
+          Swal.fire({
+            title : "오류",
+            text : "오류가 발생했습니다.",
+            confirmButtonText : "확인"
+          });
+          return;
+        }
 
+        if (_result.isConfirmed) {
+          this.$store.dispatch("removeSection",section.index);
+        }
+      })
     },
     deleteTask(taskId) {
       Swal.fire({
