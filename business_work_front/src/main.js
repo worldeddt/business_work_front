@@ -228,7 +228,7 @@ export const store = new Vuex.Store({
     }, 
     async removeSection(context, sectionId) {
       let param = new URLSearchParams();
-      param.append('taskIndex', sectionId);
+      param.append('sectionId', sectionId);
 
       await axios.post('http://localhost:8090/section/delete', param)
       .then(response => {
