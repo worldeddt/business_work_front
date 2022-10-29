@@ -69,6 +69,7 @@ export default {
         console.log(title);
 
         const promise = store.dispatch("modifySection", {
+          index : store.getters.getCurrentSelectedSection.index,
           title : title,
           description : desc,
           projectId : store.getters.getCurrentProjectIndex

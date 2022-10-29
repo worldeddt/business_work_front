@@ -196,7 +196,6 @@ export const store = new Vuex.Store({
       });
     },  
     async modifySection(context, param) {
-      console.log(param);
       await axios.post('http://localhost:8090/section/update', param)
       .then(response => {
         if (!response || !response.data || !response.data.result) {
