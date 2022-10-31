@@ -231,8 +231,7 @@ export default {
       resolve("success");
     });
 
-    promise.then(function(_result) {
-      console.log(_result);
+    promise.then(function() {
     });
   }
 }

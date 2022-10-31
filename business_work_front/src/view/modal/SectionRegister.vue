@@ -70,8 +70,7 @@ export default {
           projectId : store.getters.getCurrentProjectIndex
         });
 
-        promise.then(function(_result) {
-          console.log(_result)
+        promise.then(function() {
         });       
       },
       closeModal() {

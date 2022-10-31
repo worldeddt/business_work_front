@@ -60,7 +60,6 @@ export default {
     }),
     methods : {
       initProject(_index) {
-        console.log(_index);
         this.$store.getters.getProjectList
       },
       registerProject() {
@@ -73,8 +72,7 @@ export default {
           description : desc
         });
 
-        promise.then(function(_result) {
-          console.log(_result)
+        promise.then(function() {
         });       
       },
       closeModal() {

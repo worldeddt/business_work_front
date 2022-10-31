@@ -66,8 +66,6 @@ export default {
         const title = this.sectionTitle;
         const desc = this.sectionDesc;
 
-        console.log(title);
-
         const promise = store.dispatch("modifySection", {
           index : store.getters.getCurrentSelectedSection.index,
           title : title,
@@ -75,8 +73,7 @@ export default {
           projectId : store.getters.getCurrentProjectIndex
         });
 
-        promise.then(function(_result) {
-          console.log(_result)
+        promise.then(function() {
         });       
       },
       closeModal() {

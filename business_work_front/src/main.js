@@ -101,9 +101,6 @@ export const store = new Vuex.Store({
       });
     },
     openSectionModify(state, _param) {
-      
-    
-      console.log(_param.section);
       state.currentSelectedSection = _param.section;
 
       _param.modal.show(SectionModify, {
@@ -149,6 +146,7 @@ export const store = new Vuex.Store({
 
       let param = new URLSearchParams();
       param.append('projectId', parameter.projectId);
+
       await axios.post('http://localhost:8090/project/delete', param)
       .then(response => {
         if (response && response.data && response.data.result) {
@@ -279,7 +277,6 @@ export const store = new Vuex.Store({
         }
       })
       .catch(reject => {
-        console.log(reject);
         alert("삭제에 실패하였습니다.");
         return;
       })
@@ -306,7 +303,6 @@ export const store = new Vuex.Store({
         }
       })
       .catch(reject => {
-        console.log(reject);
         alert("수정에 실패하였습니다.");
         return;
       })

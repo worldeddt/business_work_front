@@ -76,7 +76,7 @@
 </template>
 
 <script>
-
+import Swal from 'sweetalert2';
 
 export default {
   data: () => ({
@@ -91,22 +91,22 @@ export default {
   },
   methods : {
     routerProject(projectIndex) {
-      console.log(projectIndex);
       if(this.$route.path !== `/project/${projectIndex}`) {
         this.$router.push({path:`/project/${projectIndex}`})
       }
     },
-    deleteProject(_projectIndex) {
-      const store = this.$store;
-
-      const promise = new Promise(function (resolve) {
-        store.dispatch("removeProject", {"projectId" : _projectIndex});
-        resolve("success");
+    deleteProject(projectId) {
+      Swal.fire({
+        title: '삭제',
+        text: '삭제 하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton:true,
+        cancelButtonText : '취소'
+      }).then((_result) => {
+        if (_result.isConfirmed) {
+          this.$store.dispatch("removeProject",{projectId});
+        }
       });
-
-      promise.then(function(_result) {
-        console.log(_result)
-      });        
     },
     updateProject(_projectIndex) {
       for (let project of this.$store.getters.getProjectList) {

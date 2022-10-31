@@ -31,7 +31,6 @@ export const storage = {
         const returnValue = response.data;
         
       if (returnValue.commonResponse && returnValue.commonResponse.result === 1) {
-        console.log(returnValue.projectList);
         store.state.allProjects = returnValue.projectList
       }
       } 

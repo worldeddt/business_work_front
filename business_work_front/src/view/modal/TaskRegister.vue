@@ -95,9 +95,6 @@ export default {
       document.getElementById("taskTitle").value = "";
       document.getElementById("taskDesc").value = "";
 
-      console.log(this.taskDesc);
-      console.log(document.getElementById("taskDesc").value);
-
       if (!this.$store.getters.getCurrentSelectedTask) return;
     
       if (this.$store.getters.getCurrentSelectedTask.title) this.taskTitle = this.$store.getters.getCurrentSelectedTask.title;
